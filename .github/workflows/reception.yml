@@ -1,0 +1,37 @@
+name: Recepcion de Datos UPDS
+on:
+  repository_dispatch:
+    types: [nueva_postulacion]
+
+jobs:
+  guardar_dato:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: Crear archivo de postulación
+        run: |
+          mkdir -p data/postulaciones
+          ID_USUARIO="${{ github.event.client_payload.id }}"
+          SECRETARIO="${{ github.event.client_payload.secretario }}"
+          VOCAL="${{ github.event.client_payload.vocal }}"
+          CONTENIDO="{\"id\": \"$ID_USUARIO\", \"secretario\": \"$SECRETARIO\", \"vocal\": \"$VOCAL\", \"fecha\": \"$(date)\"}"
+          echo $CONTENIDO > data/postulaciones/$ID_USUARIO.json
+
+      - name: Actualizar base de datos de usuarios
+        run: |
+          # Nota: Como tu usuarios.json es una lista directa [], el filtro de jq cambia ligeramente
+          ID_BUSCADO="${{ github.event.client_payload.id }}"
+          jq "map(if .id == \"$ID_BUSCADO\" then .ha_postulado = true else . end)" data/usuarios.json > temp.json && mv temp.json data/usuarios.json
+
+      - name: Commit y Push de los cambios
+        run: |
+          git config --global user.name "Robot Electoral UPDS"
+          git config --global user.email "robot@upds.edu.bo"
+          git add data/
+          git commit -m "Registro de postulación: ${{ github.event.client_payload.id }}"
+          git push
+        env:
+          # ESTA LÍNEA ES VITAL: Usa el Secret que configuramos en GitHub
+          GITHUB_TOKEN: ${{ secrets.VOTACION_TOKEN }}
