@@ -2,7 +2,7 @@ name: Recepcion de Datos UPDS
 on:
   repository_dispatch:
     types: [nueva_postulacion]
-
+    workflow_dispatch:
 jobs:
   guardar_dato:
     runs-on: ubuntu-latest
