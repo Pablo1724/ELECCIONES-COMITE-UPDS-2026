@@ -48,7 +48,7 @@ async function enviarPostulacion(propuesta) {
         const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/dispatches`, {
             method: 'POST',
             headers: {
-                'Authorization': `token ${TOKEN}`,
+                
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
             },
@@ -58,7 +58,7 @@ async function enviarPostulacion(propuesta) {
             })
         });
 
-        if (response.ok) {
+        if (response.ok || response.status === 204) {
             actualizarEstadoLocal('ha_postulado');
         } else {
             throw new Error('Error en la comunicación con GitHub');
@@ -78,7 +78,7 @@ async function enviarVotoFinal(voto) {
         const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/dispatches`, {
             method: 'POST',
             headers: {
-                'Authorization': `token ${TOKEN}`,
+                
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
             },
