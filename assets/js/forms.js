@@ -1,7 +1,7 @@
 // Configuración global del repositorio
 const OWNER = 'Pablo1724'; // Reemplaza con tu nombre de usuario de GitHub
 const REPO = 'ELECCIONES-COMITE-UPDS-2026'; // Reemplaza con el nombre de tu repositorio
-const TOKEN = 'TU_TOKEN_GHP_AQUÍ'; 
+const TOKEN = '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'; 
 
 // 1. Función para cargar el personal del JSON en los buscadores (Tom Select)
 async function cargarPersonalUPDS() {
@@ -45,25 +45,33 @@ async function enviarPostulacion(propuesta) {
     btn.innerText = "Enviando...";
 
     try {
+        // Obtenemos los datos del usuario logueado desde sessionStorage
+        const usuario = JSON.parse(sessionStorage.getItem('usuarioLogueado'));
+        
         const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/dispatches`, {
             method: 'POST',
             headers: {
+                // IMPORTANTE: Sin esta línea, GitHub rechaza la conexión
                 'Authorization': `Bearer ${TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 event_type: 'nueva_postulacion',
-                client_payload: { 
-        id: propuesta.id, // Para que el robot sepa el nombre del archivo
-        data: propuesta   // El contenido del voto
-    }
+                client_payload: {
+                    id: usuario.id, // ID para el nombre del archivo
+                    secretario: propuesta.secretario,
+                    vocal: propuesta.vocal
+                }
             })
         });
 
+        // GitHub responde con 204 No Content si todo salió bien
         if (response.ok || response.status === 204) {
             actualizarEstadoLocal('ha_postulado');
         } else {
+            const errorData = await response.json();
+            console.error("Detalle error GitHub:", errorData);
             throw new Error('Error en la comunicación con GitHub');
         }
     } catch (error) {
