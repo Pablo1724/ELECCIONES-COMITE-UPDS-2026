@@ -6,7 +6,7 @@ const TOKEN = '';
 // 1. Función para cargar el personal del JSON en los buscadores (Tom Select)
 async function cargarPersonalUPDS() {
     try {
-        const response = await fetch('../../data/personal_upds.json');
+        const response = await fetch('data/personal_upds.json');
         const personal = await response.json();
         
         const selectores = ['select-secretario', 'select-vocal'];
