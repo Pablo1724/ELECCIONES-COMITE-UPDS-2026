@@ -54,7 +54,10 @@ async function enviarPostulacion(propuesta) {
             },
             body: JSON.stringify({
                 event_type: 'nueva_postulacion',
-                client_payload: propuesta
+                client_payload: { 
+        id: propuesta.id, // Para que el robot sepa el nombre del archivo
+        data: propuesta   // El contenido del voto
+    }
             })
         });
 
