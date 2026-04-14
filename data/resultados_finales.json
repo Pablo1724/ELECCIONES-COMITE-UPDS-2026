@@ -1,0 +1,16 @@
+{
+  "secretario": {
+    "Carlos Arce": 12,
+    "Maria Elena": 8,
+    "Ana Lopez": 5,
+    "Roberto Soliz": 3,
+    "Pedro Gomez": 2
+  },
+  "vocal": {
+    "Sergio Perez": 10,
+    "Claudia Diaz": 15,
+    "Monica Suarez": 4,
+    "David Rojas": 7,
+    "Fernando Paz": 3
+  }
+}

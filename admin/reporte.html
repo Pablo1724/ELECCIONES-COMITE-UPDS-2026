@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - UPDS</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div class="container" style="max-width: 700px;">
+        <header>
+            <img src="../assets/img/logo-upds.png" alt="Logo UPDS" width="100">
+            <h1>Informe Oficial de Escrutinio</h1>
+            <p>Comité Mixto de Seguridad y Salud Ocupacional</p>
+        </header>
+
+        <section id="resumen-final">
+            <div id="tabla-resultados">
+                </div>
+            <br>
+            <button id="btn-download" class="btn-admin">Descargar Informe Excel (CSV)</button>
+        </section>
+
+        <footer style="margin-top: 20px;">
+            <button onclick="window.location.href='../dashboard.html'" style="background: #666;">Ver Dashboard</button>
+        </footer>
+    </div>
+
+    <script>
+        async function generarInforme() {
+            try {
+                const response = await fetch('../data/resultados_finales.json');
+                const datos = await response.json();
+                
+                let csvContent = "data:text/csv;charset=utf-8,";
+                csvContent += "Cargo,Candidato,Total Votos\n";
+
+                // Procesar Secretarios
+                for (const [nombre, votos] of Object.entries(datos.secretario)) {
+                    csvContent += `Secretario,${nombre},${votos}\n`;
+                }
+                // Procesar Vocales
+                for (const [nombre, votos] of Object.entries(datos.vocal)) {
+                    csvContent += `Segundo Vocal,${nombre},${votos}\n`;
+                }
+
+                // Crear el link de descarga
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "Resultados_Elecciones_UPDS.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+            } catch (error) {
+                alert("Error al generar el archivo. Asegúrese de que existan resultados.");
+            }
+        }
+
+        document.getElementById('btn-download').addEventListener('click', generarInforme);
+    </script>
+</body>
+</html>

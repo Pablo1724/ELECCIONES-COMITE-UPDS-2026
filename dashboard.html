@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados en Tiempo Real - UPDS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container" style="max-width: 800px;">
+        <header>
+            <img src="assets/img/logo-upds.png" alt="Logo UPDS" width="120">
+            <h1>Resultados del Comité Mixto</h1>
+            <p>Actualización automática mediante GitHub Actions</p>
+        </header>
+
+        <section class="charts-container">
+            <div class="chart-box">
+                <h3>Votación: Secretari@</h3>
+                <canvas id="chartSecretario"></canvas>
+            </div>
+            <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
+            <div class="chart-box">
+                <h3>Votación: Segundo Vocal</h3>
+                <canvas id="chartVocal"></canvas>
+            </div>
+        </section>
+
+        <footer style="margin-top: 30px;">
+            <button onclick="window.location.href='index.html'">Volver al Inicio</button>
+        </footer>
+    </div>
+
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

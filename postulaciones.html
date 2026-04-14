@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postulaciones - Comité Mixto UPDS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    
+    <style>
+        /* Ajuste para que el buscador combine con el estilo UPDS */
+        .ts-control { border-radius: 6px; padding: 12px; border: 1px solid #ccc; }
+        .ts-dropdown { border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="assets/img/logo-upds.png" alt="Logo UPDS" width="120">
+            <h1>Propuesta de Candidatos</h1>
+            <p id="welcome-msg"></p>
+        </header>
+
+        <section id="form-section">
+            <form id="postulacionForm">
+                <fieldset>
+                    <legend>Cargo: Secretari@</legend>
+                    <label for="select-secretario">Seleccione al Postulado:</label>
+                    <select id="select-secretario" class="select-personal" required>
+                        <option value="">Cargando personal...</option>
+                    </select>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Cargo: Segundo Vocal</legend>
+                    <label for="select-vocal">Seleccione al Postulado:</label>
+                    <select id="select-vocal" class="select-personal" required>
+                        <option value="">Cargando personal...</option>
+                    </select>
+                </fieldset>
+
+                <button type="submit" id="btn-enviar">Enviar Postulación</button>
+            </form>
+        </section>
+
+        <div id="mensaje-bloqueo" style="display:none;">
+            <h3>Usted ya ha realizado su postulación.</h3>
+            <p>Gracias por participar en esta etapa del proceso electoral.</p>
+        </div>
+    </div>
+
+    <script src="assets/js/forms.js"></script>
+    <script>
+        // 1. Verificación de sesión al cargar
+        const usuario = JSON.parse(sessionStorage.getItem('usuarioLogueado'));
+        
+        if (!usuario) {
+            window.location.href = "index.html";
+        } else {
+            document.getElementById('welcome-msg').innerText = `Usuario: ${usuario.nombre}`;
+            
+            // Si el usuario ya postuló anteriormente, bloqueamos el formulario
+            if (usuario.ha_postulado) {
+                document.getElementById('form-section').style.display = 'none';
+                document.getElementById('mensaje-bloqueo').style.display = 'block';
+            }
+        }
+
+        // 2. Manejo del envío del formulario
+        document.getElementById('postulacionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Recolección de datos usando los IDs corregidos de los selectores
+            const data = {
+                id: usuario.id,
+                secretario: document.getElementById('select-secretario').value,
+                vocal: document.getElementById('select-vocal').value
+            };
+            
+            // Validación de seguridad antes de llamar a la API
+            if (!data.secretario || !data.vocal) {
+                alert("Por favor, seleccione a ambos candidatos antes de enviar.");
+                return;
+            }
+            
+            // Llamada a la función global en forms.js
+            enviarPostulacion(data);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votación Comité Mixto - UPDS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="assets/img/logo-upds.png" alt="Logo UPDS" width="120">
+            <h1>Votación Oficial</h1>
+            <p id="user-info"></p>
+        </header>
+
+        <section id="voting-section">
+            <form id="voteForm">
+                <fieldset>
+                    <legend>Candidatos para Secretari@</legend>
+                    <div id="lista-secretario" class="opciones-voto">
+                        </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Candidatos para Segundo Vocal</legend>
+                    <div id="lista-vocal" class="opciones-voto">
+                        </div>
+                </fieldset>
+
+                <button type="submit" id="btn-votar">Emitir Voto Secreto</button>
+            </form>
+        </section>
+
+        <div id="voto-exitoso" style="display:none;">
+            <h2 style="color: var(--exito);">¡Voto Registrado!</h2>
+            <p>Gracias por cumplir con tu deber en el Comité Mixto de la UPDS.</p>
+            <button onclick="window.location.href='dashboard.html'">Ver Resultados Parciales</button>
+        </div>
+    </div>
+
+    <script src="assets/js/forms.js"></script>
+    <script>
+        // Verificación de sesión
+        const user = JSON.parse(sessionStorage.getItem('usuarioLogueado'));
+        if (!user) window.location.href = "index.html";
+        
+        document.getElementById('user-info').innerText = `Votante: ${user.nombre}`;
+
+        // Cargar candidatos y verificar estado
+        async function inicializarVotacion() {
+            // Si ya votó, bloqueamos
+            if (user.ha_votado) {
+                document.getElementById('voting-section').style.display = 'none';
+                document.getElementById('voto-exitoso').style.display = 'block';
+                return;
+            }
+
+            // Cargamos los candidatos seleccionados (los 5 más postulados)
+            const res = await fetch('data/config_eleccion.json');
+            const config = await res.json();
+
+            renderizarOpciones('lista-secretario', config.candidatos_secretario, 'secretario');
+            renderizarOpciones('lista-vocal', config.candidatos_vocal, 'vocal');
+        }
+
+        function renderizarOpciones(contenedorId, lista, nombreGrupo) {
+            const container = document.getElementById(contenedorId);
+            lista.forEach(candi => {
+                container.innerHTML += `
+                    <label class="radio-option">
+                        <input type="radio" name="${nombreGrupo}" value="${candi.id}" required>
+                        <span>${candi.nombre}</span>
+                    </label><br>
+                `;
+            });
+        }
+
+        document.getElementById('voteForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const voto = {
+                id_votante: user.id,
+                voto_secretario: document.querySelector('input[name="secretario"]:checked').value,
+                voto_vocal: document.querySelector('input[name="vocal"]:checked').value
+            };
+            enviarVotoFinal(voto);
+        });
+
+        inicializarVotacion();
+    </script>
+</body>
+</html>

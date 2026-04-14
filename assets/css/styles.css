@@ -1,0 +1,165 @@
+/* Paleta de Colores UPDS */
+:root {
+    --azul-upds: #003366;
+    --rojo-upds: #cc0000;
+    --gris-fondo: #f4f7f6;
+    --blanco: #ffffff;
+    --texto: #333333;
+    --exito: #28a745;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--gris-fondo);
+    color: var(--texto);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container, .login-container {
+    background-color: var(--blanco);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    border-top: 5px solid var(--azul-upds);
+}
+
+header img {
+    margin-bottom: 20px;
+}
+
+h1, h2 {
+    color: var(--azul-upds);
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Estilos de Formulario */
+fieldset {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+legend {
+    padding: 0 10px;
+    font-weight: bold;
+    color: var(--rojo-upds);
+    font-size: 0.9em;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: var(--azul-upds);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,51,102,0.2);
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--azul-upds);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #002244;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Mensajes de Estado */
+#mensaje-bloqueo {
+    padding: 20px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 8px;
+    color: #856404;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+}
+
+
+.opciones-voto {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.radio-option:hover {
+    background-color: #f0f4f8;
+}
+
+.radio-option input {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+    accent-color: var(--azul-upds);
+}
+
+.btn-admin {
+    background-color: var(--exito) !important;
+    border: 2px solid #1e7e34 !important;
+}
+
+.btn-admin:hover {
+    background-color: #218838 !important;
+}

@@ -1,0 +1,16 @@
+{
+  "candidatos_secretario": [
+    { "id": "S1", "nombre": "Ing. Carlos Arce" },
+    { "id": "S2", "nombre": "Lic. Maria Elena" },
+    { "id": "S3", "nombre": "Dra. Ana Lopez" },
+    { "id": "S4", "nombre": "Ing. Roberto Soliz" },
+    { "id": "S5", "nombre": "Lic. Pedro Gomez" }
+  ],
+  "candidatos_vocal": [
+    { "id": "V1", "nombre": "Ing. Sergio Perez" },
+    { "id": "V2", "nombre": "Lic. Claudia Diaz" },
+    { "id": "V3", "nombre": "Dra. Monica Suarez" },
+    { "id": "V4", "nombre": "Ing. David Rojas" },
+    { "id": "V5", "nombre": "Lic. Fernando Paz" }
+  ]
+}
