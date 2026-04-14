@@ -52,7 +52,7 @@ async function enviarPostulacion(propuesta) {
             method: 'POST',
             headers: {
                 // IMPORTANTE: Sin esta línea, GitHub rechaza la conexión
-                'Authorization': `Bearer ${TOKEN}`,
+                'Authorization': `token ${TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
             },
