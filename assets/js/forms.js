@@ -1,7 +1,7 @@
 // Configuración global del repositorio
 const OWNER = 'Pablo1724'; // Reemplaza con tu nombre de usuario de GitHub
 const REPO = 'ELECCIONES-COMITE-UPDS-2026'; // Reemplaza con el nombre de tu repositorio
-const TOKEN = ''; 
+const TOKEN = 'TU_TOKEN_GHP_AQUÍ'; 
 
 // 1. Función para cargar el personal del JSON en los buscadores (Tom Select)
 async function cargarPersonalUPDS() {
@@ -48,7 +48,7 @@ async function enviarPostulacion(propuesta) {
         const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/dispatches`, {
             method: 'POST',
             headers: {
-                
+                'Authorization': `Bearer ${TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
             },
@@ -78,7 +78,7 @@ async function enviarVotoFinal(voto) {
         const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/dispatches`, {
             method: 'POST',
             headers: {
-                
+                'Authorization': `Bearer ${TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
             },
