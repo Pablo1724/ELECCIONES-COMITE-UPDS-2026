@@ -1,6 +1,6 @@
 // Configuración global del repositorio
-const OWNER = 'TU_USUARIO_GITHUB'; // Reemplaza con tu nombre de usuario de GitHub
-const REPO = 'SISTEMA-VOTACION-UPDS'; // Reemplaza con el nombre de tu repositorio
+const OWNER = 'Pablo1724'; // Reemplaza con tu nombre de usuario de GitHub
+const REPO = 'ELECCIONES-COMITE-UPDS-2026'; // Reemplaza con el nombre de tu repositorio
 const TOKEN = ''; 
 
 // 1. Función para cargar el personal del JSON en los buscadores (Tom Select)
